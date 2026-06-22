@@ -1,0 +1,16 @@
+langgraph
+langgraph-checkpoint-postgres
+langchain-core
+langchain-groq
+langchain-community
+langchain-mcp-adapters
+mcp
+psycopg[binary]
+psycopg_pool
+python-dotenv
+streamlit
+requests
+
+# Your local aviationstack MCP package, vendored into this repo (see Step 1).
+# Uncomment once it lives at ./mcp_servers/aviationstack_mcp with a setup.py/pyproject.toml:
+# -e ./mcp_servers/aviationstack_mcp

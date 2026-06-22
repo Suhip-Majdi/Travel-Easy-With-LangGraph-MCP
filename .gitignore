@@ -1,0 +1,28 @@
+# Virtual Environments
+venv/
+.venv/
+agentenv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment Variables
+.env
+
+# PyCharm
+.idea/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Logs
+*.log
+
+# Database
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,226 +1,345 @@
-# Build a Multi-Agent Travel Planning System using LangGraph + MCP
+# ✈️ Travel Easy with LangGraph & MCP
 
-This project extends the Multi-Agent Travel Planning System built in Part 1 by integrating MCP (Model Context Protocol) servers for real-time flight and weather data.
+An intelligent multi-agent travel planning system built with **LangGraph**, **MCP (Model Context Protocol)**, **PostgreSQL Memory**, and **Streamlit**.
 
-## Part 1 of This Project
-
-**GitHub Repository:**  
-https://github.com/codewithaarohi/AI-Travel-Planning-System-using-LangGraph
-
-**Video Tutorial:**  
-Build a Real-World Multi-Agent AI System using LangGraph | Multi-Agent AI + Memory + APIs  
-https://youtu.be/ctHby5vhDqg
+The application uses specialized AI agents to collaboratively generate personalized travel plans, search destinations, retrieve weather forecasts, gather flight information, and maintain conversational memory across interactions.
 
 ---
 
-# Requirements
+## 🚀 Overview
 
-## APIs
+Travel Easy is a real-world AI application that demonstrates how multiple AI agents can work together to solve complex travel-planning tasks.
 
-- Groq API: https://console.groq.com
-- Tavily API: https://www.tavily.com/
-- AviationStack API: https://aviationstack.com/
-- OpenWeatherMap API: https://openweathermap.org/
+Instead of relying on a single LLM call, the system orchestrates several specialized agents through LangGraph, enabling:
 
-## Tools
+* Destination research
+* Flight information retrieval
+* Weather forecasting
+* Hotel recommendations
+* Trip itinerary generation
+* Persistent memory using PostgreSQL
 
-- PostgreSQL: https://www.postgresql.org/download/
-- Tavily MCP Server: https://docs.tavily.com/documentation/mcp
+The project also integrates MCP servers to provide real-time external data access.
 
 ---
 
-# Step 1: Create Python Environment
+## ✨ Features
 
+### Multi-Agent Architecture
 
-    python -m venv langgraph_env3
+Uses LangGraph to coordinate specialized AI agents.
 
+### Persistent Memory
+
+Stores conversation history and checkpoints using PostgreSQL.
+
+### Real-Time Search
+
+Uses Tavily Search MCP for destination research and web search.
+
+### Flight Information
+
+Retrieves airline and airport information through AviationStack MCP.
+
+### Weather Forecasts
+
+Provides destination weather insights using OpenWeather APIs.
+
+### Interactive UI
+
+Streamlit-powered web application for an intuitive user experience.
+
+### Scalable Design
+
+Designed using modular agent architecture for future expansion.
+
+---
+
+## 🏗️ System Architecture
+
+```text
+User
+ │
+ ▼
+Travel Coordinator Agent
+ │
+ ├── Destination Agent
+ │      └── Tavily Search MCP
+ │
+ ├── Flight Agent
+ │      └── AviationStack MCP
+ │
+ ├── Weather Agent
+ │      └── OpenWeather MCP
+ │
+ ├── Hotel Agent
+ │      └── Tavily Search MCP
+ │
+ ▼
+LangGraph Workflow
+ │
+ ▼
+PostgreSQL Memory
+ │
+ ▼
+Final Travel Plan
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### AI & Orchestration
+
+* LangGraph
+* LangChain
+* Groq LLM
+* MCP (Model Context Protocol)
+
+### Data Sources
+
+* Tavily Search
+* AviationStack API
+* OpenWeather API
+
+### Backend
+
+* Python
+* PostgreSQL
+* Psycopg
+
+### Frontend
+
+* Streamlit
+
+---
+
+## 📂 Project Structure
+
+```text
+Travel-Easy-With-LangGraph-MCP/
+│
+├── frontend.py
+├── main.py
+├── mcp_client.py
+├── .env
+├── requirements.txt
+│
+├── checkpoints/
+├── assets/
+└── README.md
+```
+
+### Key Files
+
+| File          | Description                                      |
+| ------------- | ------------------------------------------------ |
+| main.py       | LangGraph workflow and agent definitions         |
+| frontend.py   | Streamlit user interface                         |
+| mcp_client.py | MCP integrations and external tool communication |
+| .env          | Environment variables                            |
+| README.md     | Project documentation                            |
+
+---
+
+## 🔑 Required API Keys
+
+Create accounts and generate API keys from:
+
+* Groq
+* Tavily
+* AviationStack
+* OpenWeatherMap
+
+---
+
+## ⚙️ Environment Setup
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/Suhip-Majdi/Travel-Easy-With-LangGraph-MCP.git
+
+cd Travel-Easy-With-LangGraph-MCP
+```
+
+---
+
+### 2. Create Virtual Environment
+
+```bash
+python -m venv agentenv
+```
 
 Activate:
 
+#### Windows
 
-    langgraph_env3\Scripts\activate
+```bash
+agentenv\Scripts\activate
+```
 
+#### Linux / macOS
 
----
-
-# Step 2: Install Dependencies
-
-
-    pip install langgraph langchain langchain-openai langchain-groq langchain-community langchain-tavily psycopg[binary] psycopg_pool python-dotenv tavily-python requests streamlit
-
-
-
-    pip install -U "psycopg[binary,pool]" langgraph-checkpoint-postgres
-
+```bash
+source agentenv/bin/activate
+```
 
 ---
 
-# Step 3: Install PostgreSQL
+### 3. Install Dependencies
 
-Download PostgreSQL:
+```bash
+pip install -r requirements.txt
+```
 
-https://www.postgresql.org/download/
+If requirements.txt is unavailable:
 
-**Important:** Note your PostgreSQL password and port number during installation.
-
----
-
-# Step 4: Create Database
-
-
-    CREATE DATABASE langgraph_memory_demo;
-
-
----
-
-# Step 5: Setup .env File
-
-Create a `.env` file:
-
-    GROQ_API_KEY=your_groq_api_key
-
-    TAVILY_API_KEY=your_tavily_api_key
-
-    AVIATIONSTACK_API_KEY=your_aviationstack_api_key
-
-    DATABASE_URL=postgresql://postgres:postgres@localhost:5433/langgraph_memory_demo
-
+```bash
+pip install langgraph
+pip install langchain
+pip install langchain-openai
+pip install langchain-groq
+pip install langchain-community
+pip install langchain-tavily
+pip install streamlit
+pip install requests
+pip install python-dotenv
+pip install psycopg[binary]
+pip install psycopg_pool
+pip install langgraph-checkpoint-postgres
+```
 
 ---
 
-# Step 6: Get API Keys
+## 🐘 PostgreSQL Setup
 
-- Groq: https://console.groq.com
-- Tavily: https://tavily.com
-- AviationStack: https://aviationstack.com
-- OpenWeatherMap: https://openweathermap.org/
+### Create Database
 
----
+```sql
+CREATE DATABASE langgraph_memory_demo;
+```
 
-# Setup AviationStack MCP Server (Local MCP Server)
+### Example Connection String
 
-Repository:
-
-https://github.com/Pradumnasaraf/aviationstack-mcp
-
-Open PowerShell:
-
-    E:
-
-    cd E:\Multi_agent_system_with_MCP
-
-
-Clone repository:
-
-
-    git clone https://github.com/Pradumnasaraf/aviationstack-mcp.git
-
-    cd aviationstack-mcp
-
-
-## Install UV
-
-Check:
-
-    uv --version
-
-
-Install:
-
-    pip install uv
-
-
-If installation fails:
-
-    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-
-
-## Create .env File
-
-    AVIATION_STACK_API_KEY=your_api_key_here
-
-
-## Install Dependencies
-
-    uv sync
-
-
-This will:
-
-- Create `.venv`
-- Install dependencies
-- Install AviationStack MCP package
-
-## Activate Environment
-
-    .venv\Scripts\activate
-
-
-## Start MCP Server
-
-    uv run -m aviationstack_mcp mcp run
-
-
-or
-
-
-    python -m aviationstack_mcp mcp run
-
-
-The server will remain running and wait for MCP requests.
-
-## Stop Server
-
-    CTRL + C
-
+```env
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/langgraph_memory_demo
+```
 
 ---
 
-# Setup Weather MCP Server
+## 🔐 Environment Variables
 
-Get API key:
+Create a `.env` file in the project root:
 
-https://openweathermap.org/
+```env
+GROQ_API_KEY=YOUR_GROQ_API_KEY
 
-Add the API key to your `.env` file.
+TAVILY_API_KEY=YOUR_TAVILY_API_KEY
 
-Install dependencies:
+AVIATIONSTACK_API_KEY=YOUR_AVIATIONSTACK_API_KEY
 
-    pip install mcp requests
+OPENWEATHER_API_KEY=YOUR_OPENWEATHER_API_KEY
 
-
----
-
-# Run the Application
-
-## Terminal Version
-
-    python main.py
-
-## Streamlit Web App
-
-Copy `frontend.py` from the Part 1 repository into this project.
-
-Run:
-
-    streamlit run frontend.py
-
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/langgraph_memory_demo
+```
 
 ---
 
-# Example Prompt
+## 🔌 MCP Integrations
 
-    Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs.
+### Tavily MCP
 
+Provides:
+
+* Web Search
+* Destination Research
+* Hotel Discovery
+
+### AviationStack MCP
+
+Provides:
+
+* Airport Information
+* Airline Information
+* Flight Data
+
+### Weather MCP
+
+Provides:
+
+* Current Weather
+* Forecast Data
+* Travel Weather Insights
 
 ---
 
-# Features
+## ▶️ Running the Application
 
-- Multi-Agent Architecture using LangGraph
-- PostgreSQL Memory
-- Tavily Search Integration
-- AviationStack MCP Integration
-- Weather MCP Integration
-- Streamlit Web App
-- Real-Time Travel Planning
+### Streamlit Interface
+
+```bash
+streamlit run frontend.py
+```
+
+---
+
+### Terminal Version
+
+```bash
+python main.py
+```
+
+---
+
+## 💡 Example Prompts
+
+```text
+Plan a 7-day trip to Japan under $2,000 including flights, hotels, and sightseeing.
+```
+
+```text
+Create a family-friendly travel itinerary for Dubai with a budget of $3,000.
+```
+
+```text
+Suggest a luxury 5-day trip to Switzerland including weather forecasts and hotel recommendations.
+```
+
+---
+
+## 📈 Future Improvements
+
+* Flight booking integration
+* Hotel booking APIs
+* Expense optimization
+* Interactive maps
+* Multi-language support
+* Voice-enabled travel assistant
+* RAG-based travel knowledge base
+
+---
+
+## 👨‍💻 Author
+
+Suhaib Majdi
+
+AI Engineer | Generative AI Developer | Multi-Agent Systems Enthusiast
+
+LinkedIn:
+(Add your LinkedIn profile here)
+
+GitHub:
+https://github.com/Suhip-Majdi
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider starring the repository and sharing it with others interested in:
+
+* Generative AI
+* LangGraph
+* Multi-Agent Systems
+* MCP
+* AI Travel Assistants
